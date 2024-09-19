@@ -95,6 +95,9 @@
   --accent-teal-default: #0093B0;
   --accent-teal-stronger: #27B9D6;
   --accent-teal-strongest: #69D9F0;
+
+  --wne-blue:#1e4a8a;
+  --wne-yellow:#f4bc44;
 }
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100&family=Roboto+Mono:wght@100&display=swap');
 @import url('https://fontlibrary.org//face/segment7');
@@ -201,7 +204,7 @@ html {
 
 
 html:has(.app.light) {
-  background-color: var(--light-highest);
+  background-color: var(--light-pure);
 }
 
 @media (max-width:768px){
@@ -286,7 +289,7 @@ a{
 }
 
 .light {
-  background-color: var(--light-highest);
+  background-color: var(--light-pure);
   color: var(--dark);
 }
 
@@ -307,27 +310,6 @@ a{
 .toggle-button{
   padding-right:30px;
 }
-
-.navbar {
-  display: flex;
-  position: fixed;
-  /* flex-direction: column; */
-  top:0;
-  height:100%;
-  width:16vw;
-  padding:0.5vw;
-  user-select: none;
-  z-index:100;
-  align-items: center;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
-  backdrop-filter:blur(15px);
-  transition: background-color 0.2s ease;
-}
-
-/* .logo-container  h1 {
-  font-family: 'Just Another Hand', cursive;
-  font-weight: 100;
-} */
 
 
 
@@ -749,34 +731,6 @@ a{
   height: 100vh;
 }
 
-.sidebar {
-  height: 100%;
-  width: 0; 
-  position:fixed;
-  user-select: none;
-  top:0;
-  left:0;
-  z-index:2;
-  transition-duration: 0.2s;
-}
-
-.sidebar.toggled{
-  width:100vw;
-  display:block;
-  transition-duration: 0.2s;
-}
-@media (max-width: 768px) {
-  .sidebar.toggled {
-    width: 100%;
-  }
-}
-
-@media (min-width: 769px) {
-  .sidebar.toggled {
-    width: 300px;
-  }
-}
-
 
 .main-content {
   height: auto;
@@ -834,12 +788,6 @@ a{
 
 
 
-
-.sidebar-content{
-  margin-top:100px;
-  text-align: center;
-  display:none;
-}
 .auto-margin{
   margin-left: 20px; 
   margin-right: 20px; 
@@ -4919,92 +4867,6 @@ border-radius: 0;
 .app.dark .editor-demo > pre {
   color:white;
 }
-@media (max-width:768px){
-  .editor-demo{
-    display:block;
-    height:50vh;
-    overflow:hidden;
-  }
-
-  .editor-demo > pre {
-    width:calc(100% - 20px);
-    padding:10px;
-    height:calc(20vh - 20px);
-    border-radius:1rem;
-    overflow-y: scroll;
-  }
-
-  #markdown{
-    padding:10px;
-    width:calc(100% - 20px);
-    height:calc(30vh - 20px);
-    overflow-y: scroll;
-  }
-}
-
-
-.app.dark .editor-demo{
-  background:var(--dark-lowest)
-}
-
-.picker-parent{
-  background:var(--light);
-  height:20vh;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
-  width:50%;
-  position:relative;
-
-  .picker-sidebar{
-    height:100%;
-    background:var(--light-low);
-    width:10%;
-    position:absolute;
-    top:0;
-    left:0;
-  }
-  .lowbar{
-    width:100%;
-    position:absolute;
-    bottom:0;
-    height:20%;
-    background:var(--light-lowest);
-  }
-}
-
-.app.dark .picker-parent{
-  background:var(--dark);
-
-  .picker-sidebar{
-    background:var(--dark-lowest-op);
-  }
-
-  .lowbar{
-    background:var(--dark-low);
-  }
-}
-
-.tweet-wrapper{
-  a::after{
-    content:none;
-  }
-
-  a[href]{
-    color:auto;
-  }
-}
-
-.center{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  cursor:pointer;
-}
-.center{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  cursor:pointer;
-}
 
 .markdown-pres-parent, html:has(.main-content.markdown-pres-parent){
   background:white;
@@ -6172,23 +6034,6 @@ summary.hide-arrow-details {
   }
 }
 
-.sidebar-summary{
-  background:var(--light-pure-low-op);
-  height:calc(100vh - 200px);
-  margin-bottom:100px;
-  border-radius: 1rem;
-  overflow-y: scroll;
-  overflow-x: scroll;
-  backdrop-filter: blur(10px) !important;
-  width:calc(17vw - 15px);
-  overscroll-behavior: contain;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.app.dark .sidebar-summary{
-  background:rgba(0,0,0,0.5);
-}
-
 .title-loading {
   --color:#00000024;
   --color2:#00000030;
@@ -6366,17 +6211,6 @@ summary.hide-arrow-details {
 .app.dark .popup-toggle.actived{
   background:var(--dark-lower);
   box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.4);
-}
-
-.popup-toggle .sidebar-summary{
-  margin-bottom:0 !important;
-  margin-top:0 !important;
-  height:100vh;
-  width:0;
-}
-
-.popup-toggle.actived .sidebar-summary{
-  width:auto;
 }
 
 .np-button{
@@ -7470,8 +7304,53 @@ blockquote .fullscreen-button, blockquote .run-btn{
 
 .todo-container {
   border-left: 2px solid var(--main-op-2);
-  border-radius: 1rem; /* This will round all corners */
+  border-radius: 1rem;
   padding: 10px;
   background: linear-gradient(to right, var(--main-op-2), transparent) top/100% 2px no-repeat,
               linear-gradient(to right, var(--main-op-2), transparent) bottom/100% 2px no-repeat;
 }
+
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: var(--wne-blue);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  color:var(--light-low);
+  font-family: grotesk;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-content button {
+  margin-bottom: 10px;
+}
+
+.app:has(.sidebar.open){
+  margin-left:250px;
+  width:calc(100% - 250px);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: calc(100vw - 40px);
+  }
+
+  .app:has(.sidebar.open){
+    margin-left:0;
+  }
+}
+

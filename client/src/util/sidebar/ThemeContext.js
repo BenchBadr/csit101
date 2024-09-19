@@ -12,6 +12,8 @@ export const ThemeContextProvider = ({ children }) => {
   const [language, setLanguage] = useState('0'); // This is the default language (English)
   const [cookie] = useCookies(['theme', 'language','accent']);
   const [ip, setIp] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(0);
+
 
   useEffect(() => {
     if (cookie.theme) {
@@ -19,6 +21,9 @@ export const ThemeContextProvider = ({ children }) => {
     } else {
       const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setMode(prefersDarkMode ? 'dark' : 'light');
+    }
+    if (cookie.sidebar){
+      setSidebarOpen(cookie.sidebar);
     }
     if (cookie.language) {
       setLanguage(cookie.language);
@@ -71,6 +76,15 @@ export const ThemeContextProvider = ({ children }) => {
     }
   };
 
+  const toggleSidebar = () => {
+    try {
+      setSidebarOpen(!sidebarOpen);
+      document.cookie = `sidebar=${sidebarOpen}; path=/`; // save a cookie
+    } catch (error) {
+      console.error('Error setting language cookie:', error);
+    }
+  };
+
 
   const value = {
     mode,
@@ -79,20 +93,14 @@ export const ThemeContextProvider = ({ children }) => {
     setLanguage,
     handleThemeChange,
     handleLanguageChange,
+    sidebarOpen,
+    toggleSidebar,
     ip
   };
 
   return (
-    <>
     <ThemeContext.Provider value={value}>
       {children}
-    </ThemeContext.Provider> : <ThemeContext.Provider>
-      <div className={`app ${mode}`}>
-      <div style={{minHeight:'90vh',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                <div className='safe-loader'/>
-                </div>
-      </div>
-      </ThemeContext.Provider>
-    </>
+    </ThemeContext.Provider>
   );
 };
