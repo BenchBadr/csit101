@@ -6102,24 +6102,28 @@ summary.hide-arrow-details {
   justify-content: space-between;
   flex-direction: column;
   transform:scale(0.7);
+  position: fixed;
+  left:0;
+  top:0;
+  z-index:1500;
 }
 
 .burger > div {
-  height: 2px;
-  background-color: white;
+  height: 5px;
+  background-color: var(--wne-yellow);
   transition: 0.2s;
   z-index: 999;
 }
 
 
 .burger.active > div:nth-child(1) {
-  transform: translateY(15px) rotate(45deg);
+  transform: translateY(13px) rotate(45deg);
 }
 .burger.active > div:nth-child(2) {
   opacity: 0;
 }
 .burger.active > div:nth-child(3) {
-  transform: translateY(-15px) rotate(-45deg);
+  transform: translateY(-13px) rotate(-45deg);
 }
 
 
@@ -7323,6 +7327,7 @@ blockquote .fullscreen-button, blockquote .run-btn{
   z-index: 1000;
   color:var(--light-low);
   font-family: grotesk;
+  z-index:1100;
 }
 
 .sidebar.open {
@@ -7333,20 +7338,33 @@ blockquote .fullscreen-button, blockquote .run-btn{
   padding: 20px;
   display: flex;
   flex-direction: column;
+
+  h1{
+    margin-right:-20px;
+    margin-left:-20px;
+    width:calc(100% + 40px);
+    text-align: left;
+    background:var(--wne-yellow);
+    color:var(--wne-blue);
+    user-select: none;
+  }
 }
 
-.sidebar-content button {
-  margin-bottom: 10px;
-}
-
-.app:has(.sidebar.open){
-  margin-left:250px;
-  width:calc(100% - 250px);
+@media (min-width:768px){
+  .app:has(.sidebar.open){
+    margin-left:250px;
+    width:calc(100% - 250px);
+  }
 }
 
 @media (max-width: 768px) {
   .sidebar {
     width: calc(100vw - 40px);
+    transform: translateX(0);
+  }
+
+  .sidebar.open {
+    transform: translateX(-100%);
   }
 
   .app:has(.sidebar.open){
@@ -7354,3 +7372,6 @@ blockquote .fullscreen-button, blockquote .run-btn{
   }
 }
 
+html, body {
+  overscroll-behavior: none;
+}

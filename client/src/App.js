@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <>
-    <a className={`burger ${sidebarOpen && 'active'}`} onClick={toggleSidebar} style={{position:'absolute',left:'10px',top:'10px'}}>
+    <a className={`burger ${sidebarOpen && 'active'}`} onClick={toggleSidebar}>
         <div></div>
         <div></div>
         <div></div>

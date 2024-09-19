@@ -12,7 +12,7 @@ export const ThemeContextProvider = ({ children }) => {
   const [language, setLanguage] = useState('0'); // This is the default language (English)
   const [cookie] = useCookies(['theme', 'language','accent']);
   const [ip, setIp] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(1);
 
 
   useEffect(() => {

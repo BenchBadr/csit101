@@ -7,7 +7,9 @@ const Sidebar = () => {
   return (
     <>
     <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <div className='sidebar-content'>
       <h1>CSIT101 - WNE</h1>
+      </div>
     </div>
     </>
   );
