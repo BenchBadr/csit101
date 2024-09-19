@@ -13,14 +13,12 @@ import reactStringReplace from 'react-string-replace';
 import {emojiShortcut, emojiTransorm} from './emojis';
 import { Question } from './question';
 import {Tweet} from 'react-tweet'
-import toClass from '../editor/components/toClass';
-import { Tooltip } from '../integr/wikipedia';
-import { CodeBlock } from '../integr/code';
-import { stringToValidID } from '../integr/toc';
-import TooltipProfile from './profile';
+import { Tooltip } from './integr/wikipedia';
+import { CodeBlock } from './integr/code';
+import { stringToValidID } from './integr/toc';
 import Keyboard from './inline/key';
 import Youtube from './integr/youtube';
-import WebResult from '../integr/webRes';
+import WebResult from './integr/webRes';
 
 const sanitizeHtml = (html) => {
   let sanitized = html.replace(/<style[^>]*>.*?<\/style>/gs, '');
@@ -454,7 +452,10 @@ const processChildren = (children) => {
 
   out =  reactStringReplace(out, /@([a-zA-Z0-9]{1,25})/g, (match, content) => {
       return (
-        <TooltipProfile match={match}/>
+        <a 
+        style={{color:'var(--main)',fontWeight:'500'}}
+        href={`/@${match}`}
+        >@{match}</a>
       );
   });
 
