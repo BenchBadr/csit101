@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
-import { ThemeContext } from '../sidebar/ThemeContext';
+import { ThemeContext } from '../../sidebar/ThemeContext';
+
 
 async function getWikipediaSummary(searchTerm, language='en') {
     const url = `https://${language}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(searchTerm)}`;

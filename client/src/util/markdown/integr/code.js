@@ -1,10 +1,10 @@
-import { ThemeContext } from '../sidebar/ThemeContext';
+import { ThemeContext } from '../../sidebar/ThemeContext';
 import React, { useState, useEffect, useContext } from 'react';
 import { BlockMath, InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import { Highlight, themes } from "prism-react-renderer"
 import mermaid from "mermaid";
-import { PythonContext } from '../editor/integr/python';
+import { PythonContext } from './python';
 
 
 const CopyWrapper = ({ textToCopy, children }) => {
