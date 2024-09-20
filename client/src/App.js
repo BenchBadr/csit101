@@ -20,7 +20,7 @@ function App() {
 const Home = ({children}) => {
   const { toggleSidebar, sidebarOpen, mode, theme } = useContext(ThemeContext);
   const isMobile = window.innerWidth < 768;
-  console.log(theme)
+
   return (
     <>
     <a className={`burger ${((sidebarOpen && !isMobile) || (isMobile && !sidebarOpen)) && 'active'}`} onClick={() => toggleSidebar()}>

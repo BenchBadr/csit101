@@ -1,6 +1,8 @@
 import React, {useContext} from 'react';
 import Md from '../util/markdown/markdown';
 import { ThemeContext } from '../util/sidebar/ThemeContext';
+import menuData from './data/sections';
+import { Accordion } from '../util/markdown/markdown';
 
 const Landing = () => {
     const { theme } = useContext(ThemeContext);
@@ -19,22 +21,36 @@ const Landing = () => {
         }} 
         alt="image description" 
       />
-      <div style={{ paddingLeft:'20px',paddingRight:'20px', paddingTop:'45vh',border:'3px solid var(--wne-blue)'}}>
-        {/* <div className={`markdown-${theme}-parent`}> */}
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '30px'
+        }}>
+        <img 
+            src="https://wne.edu/_global/images/footer-logo.svg"
+            style={{zIndex:1, maxWidth:'500px', borderRadius:0}}
+        />
+        </div>
+      <div style={{ paddingLeft:'20px',paddingRight:'20px', paddingTop:'10vh'}}>
         <div className={`markdown-${theme}`}>
         <Md custom={1}>{`
 # Welcome
 
-Welcome to the website for CS/IT 101 at Western New England University. This website contains some of the labs for the course.
+Hello world! Welcome to the website for CS/IT 101 at **Western New England University**. This website contains some of the labs for the course.
 
-## :new: Changelog
+|| Changelog
 - Brand new UI
 - Support for Dark / Light modes
 - Introduction of themes
 - Export image functionnality
+||
+
+## Important contacts
+
+- Bob Walz, robert.walz@wne.edu
         `}</Md>
         </div>
-        {/* </div> */}
         </div>
     </div>
   );

@@ -118,7 +118,7 @@ const Textbox = ({children, cls}) => {
 
 
 
-export const Accordion = ({ content, id, custom=null }) => {
+export const Accordion = ({ content, id, custom=null, wne=null }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const lines = content.split('\n');
@@ -141,10 +141,10 @@ export const Accordion = ({ content, id, custom=null }) => {
           <LightMd>{lines[0]}</LightMd>
           <div>
             {isChecked}
-            <a className='material-icons-round'>expand_more</a>
+            <a className='material-icons-round' style={{color:wne ? 'var(--wne-yellow)' : 'inherit'}}>expand_more</a>
           </div>
         </label>
-        <div className="tab__content">
+        <div className="tab__content" style={{borderLeft:wne ? '1px solid var(--wne-yellow)' : 'none'}}>
           <LightMd>
             {lines.slice(1).join('\n')}
           </LightMd>

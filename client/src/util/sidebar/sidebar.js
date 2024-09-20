@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
+import { Accordion } from '../markdown/markdown';
+import menuData from '../../pages/data/sections';
 
 const Sidebar = () => {
   const { mode, handleModeChange, sidebarOpen, toggleSidebar} = useContext(ThemeContext);
@@ -10,6 +12,20 @@ const Sidebar = () => {
       <div className='sidebar-content'>
       <h1>CSIT101 - WNE</h1>
       </div>
+
+      <div style={{padding:'20px',overflowY:'scroll',height:'calc(100vh - 300px)',background:`rgba(0,0,0,.2)`}}>
+      
+      {menuData.menu.map((item, index) => (
+        <Accordion
+          key={index}
+          id={item.title}
+          content={`${item.title}\n - ${item.subitems ? item.subitems.map(subitem => subitem.title).join('\n\n - ') : ''}`}
+          custom={1}
+          wne={1}  
+        />
+      ))}
+      </div>
+
       <div style={{position:'absolute',bottom:'10px',left:'10px',display:'flex',alignItems:'center'}}>
       <div  onClick={() => handleModeChange(mode==='dark' ? 'light' : 'dark')} className='opacity-btn'>
         <a className='material-icons-outlined'>{mode!=='dark' ? 'dark_mode' : 'light_mode'}</a>

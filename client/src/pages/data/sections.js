@@ -1,74 +1,74 @@
 const menuData = {
     menu: [
       {
-        title: "Home",
-        link: "#home"
-      },
-      {
         title: "Data Representation",
+        link: 'data-repr',
         subitems: [
           {
             title: "ASCII Encoding",
-            link: "#ascii-encoding"
+            link: "ascii-encoding"
           },
           {
             title: "Binary Addition",
-            link: "#binary-addition"
+            link: "binary-addition"
           },
           {
             title: "Conversions",
-            link: "#conversions"
+            link: "conversions"
           },
           {
             title: "Between Bases",
-            link: "#between-bases"
+            link: "between-bases"
           },
           {
             title: "Text Compression",
-            link: "#text-compression"
+            link: "text-compression"
           }
         ]
       },
       {
         title: "Hardware",
+        com:'hardware',
         subitems: [
           {
             title: "Logic Gates",
-            link: "#logic-gates"
+            link: "logic-gates"
           },
           {
             title: "CPU",
-            link: "#cpu"
+            link: "cpu"
           }
         ]
       },
       {
         title: "System Software",
+        url:'sys-soft',
         subitems: [
           {
             title: "Disk Scheduling",
-            link: "#disk-scheduling"
+            link: "disk-scheduling"
           },
           {
             title: "Process Scheduling",
-            link: "#process-scheduling"
+            link: "process-scheduling"
           },
           {
             title: "Memory Placement",
-            link: "#memory-placement"
+            link: "memory-placement"
           }
         ]
       },
       {
         title: "Communications",
+        url:'com',
         subitems: [
           {
             title: "Network Design",
-            link: "#network-design"
+            link: "network-design"
           },
           {
             title: "Transmission",
-            link: "#transmission"
+            link: "transmission"
           }
         ]
       }
