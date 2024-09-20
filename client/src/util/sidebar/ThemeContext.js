@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import env from "react-dotenv";
 
@@ -13,16 +13,21 @@ export const ThemeContextProvider = ({ children }) => {
   const [cookie] = useCookies(['theme', 'language','accent']);
   const [ip, setIp] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(1);
+  const [theme, setTheme] = useState('body');
 
 
   useEffect(() => {
     if (cookie.theme) {
-      setMode(cookie.theme);
+      setTheme(cookie.theme);
+    }
+    if (cookie.mode) {
+      setMode(cookie.mode);
     } else {
       const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setMode(prefersDarkMode ? 'dark' : 'light');
     }
     if (cookie.sidebar){
+      //  window.innerWidth < 768
       setSidebarOpen(cookie.sidebar);
     }
     if (cookie.language) {
@@ -56,6 +61,15 @@ export const ThemeContextProvider = ({ children }) => {
     });
   }, []);
 
+
+  const handleModeChange = (newTheme) => {
+    try {
+      setMode(newTheme);
+      document.cookie = `mode=${newTheme}; path=/`; // save a cookie
+    } catch (error) {
+      console.error('Error setting theme cookie:', error);
+    }
+  };
 
   const handleThemeChange = (newTheme) => {
     try {
@@ -95,6 +109,8 @@ export const ThemeContextProvider = ({ children }) => {
     handleLanguageChange,
     sidebarOpen,
     toggleSidebar,
+    theme,
+    handleModeChange,
     ip
   };
 

@@ -238,21 +238,6 @@ html:has(.app.dark) {
   background-color: var(--dark);
 }
 
-html:has(.app.dark > .main-content > .inapp){
-  background:black !important;
-}
-
-html:has(.app.light > .main-content > .inapp){
-  background:white !important;
-}
-
-.app.dark:has(.main-content > .inapp){
-  background:black !important;
-}
-
-.app.light:has(.main-content > .inapp){
-  background:white !important;
-}
 
 
 button {
@@ -306,6 +291,11 @@ a{
   height: 100%;
   z-index: -1;
 }
+
+html, .app {
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
 
 .toggle-button{
   padding-right:30px;
@@ -736,40 +726,6 @@ a{
   height: auto;
   min-height: 60vh;
 }
-
-.main-content.no_padding{
-  padding-bottom: 0 !important;
-  padding-top:0 !important;
-}
-
-@media (min-width:768px){
-  .main-content{
-    width:83vw;
-    margin-left:17vw;
-  }
-
-}
-
-@media (max-width:768px){
-  .main-content{
-    padding-top:50px;
-    padding-bottom:50px;
-  }
-
-  .main-content.no_padding{
-    padding-bottom: 0 !important;
-    padding-top:0 !important;
-  }
-  
-
-
-  .main-content:has(.inapp){
-    padding-top:80px;
-  }
-
-}
-
-
 
 
 
@@ -2353,7 +2309,7 @@ hr {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 150;
+  z-index: 1600;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
@@ -2880,6 +2836,10 @@ code{
   font-family: zulpiya;
   font-size: 100%;
 }
+
+.app.dark .markdown-hand{
+  color:var(--light-low)
+}
 .markdown-hand  img{
   border-radius:1rem;
 }
@@ -2918,6 +2878,13 @@ code{
   -webkit-text-stroke-color: blue;
   -webkit-text-fill-color: blue;
   text-decoration: underline;
+}
+
+.app.dark .markdown-hand {
+  h1, h2, h3 {
+    -webkit-text-stroke-color: var(--light-low);
+    -webkit-text-fill-color: var(--light-low);
+  }
 }
 
 .markdown-hand h1{
@@ -7316,6 +7283,7 @@ blockquote .fullscreen-button, blockquote .run-btn{
 
 
 .sidebar {
+  all:initial;
   position: fixed;
   top: 0;
   left: 0;
@@ -7332,6 +7300,30 @@ blockquote .fullscreen-button, blockquote .run-btn{
 
 .sidebar.open {
   transform: translateX(0);
+}
+
+.opacity-btn{
+  user-select: none;
+  cursor:pointer;
+  transition-duration:.2s;
+
+  a{
+    transition-duration: .2s;
+  }
+  &:hover{
+    opacity:0.8;
+  }
+  &:active{
+    a {
+    transform:rotate(45deg);
+    }
+  }
+}
+
+@media (max-width:768px){
+  .opacity-btn{
+    transform:scale(1.5);
+  }
 }
 
 .sidebar-content {
@@ -7361,6 +7353,8 @@ blockquote .fullscreen-button, blockquote .run-btn{
   .sidebar {
     width: calc(100vw - 40px);
     transform: translateX(0);
+    backdrop-filter: blur(5px);
+    background: color-mix(in srgb, var(--wne-blue), transparent 20%);
   }
 
   .sidebar.open {
