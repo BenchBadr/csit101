@@ -119,7 +119,7 @@ const Textbox = ({children, cls}) => {
 
 
 export const Accordion = ({ content, id, custom=null, wne=null }) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(wne);
 
   const lines = content.split('\n');
 

@@ -7370,3 +7370,12 @@ blockquote .fullscreen-button, blockquote .run-btn{
 html, body {
   overscroll-behavior: none;
 }
+
+.sidebar blockquote{
+  color:var(--wne-yellow);
+  border:none;
+  opacity:1;
+  margin:0;
+  padding:0;
+  font-weight:900;
+}

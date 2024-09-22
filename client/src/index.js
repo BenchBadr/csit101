@@ -1,16 +1,41 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import React, {StrictMode} from 'react';
+import { createBrowserRouter, RouterProvider, Route, useParams} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import App, {Home} from './App';
+import NotFoundPage from './pages/404';
+import ReactDOM from 'react-dom/client';
+import { ThemeContext, ThemeContextProvider } from './util/sidebar/ThemeContext';
+import Converter from './pages/apps/data-repr/converter';
+
+const routes = [
+  {
+    path: "/",
+    element: <App/>,
+  },
+  {
+    path: "/data-repr/conversions",
+    element: <ThemeContextProvider>
+    <Home>
+      <Converter/>
+    </Home>
+</ThemeContextProvider>,
+  },
+  {
+    path:'*',
+    element:<ThemeContextProvider>
+    <Home>
+      <NotFoundPage/>
+    </Home>
+</ThemeContextProvider>
+  }
+]
+const router = createBrowserRouter(routes);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

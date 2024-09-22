@@ -9,7 +9,7 @@ const Sidebar = () => {
   return (
     <>
     <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-      <div className='sidebar-content'>
+      <div className='sidebar-content' onClick={() => window.location.pathname!='/' ? window.location.href='/' : null} style={{cursor:window.location.pathname!='/' ? 'pointer' : 'auto'}}>
       <h1>CSIT101 - WNE</h1>
       </div>
 
@@ -19,9 +19,9 @@ const Sidebar = () => {
         <Accordion
           key={index}
           id={item.title}
-          content={`${item.title}\n - ${item.subitems ? item.subitems.map(subitem => subitem.title).join('\n\n - ') : ''}`}
+          content={`${item.title}\n - ${item.subitems ? item.subitems.map(subitem => `${'/'+item.link+'/'+subitem.link === window.location.pathname ? '> ' : ''}[`+subitem.title+`](/${item.link}/${subitem.link})`).join('\n\n - ') : ''}`}
           custom={1}
-          wne={1}  
+          wne={true}  
         />
       ))}
       </div>

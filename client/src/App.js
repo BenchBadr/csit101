@@ -17,7 +17,7 @@ function App() {
 
 
 
-const Home = ({children}) => {
+export const Home = ({children}) => {
   const { toggleSidebar, sidebarOpen, mode, theme } = useContext(ThemeContext);
   const isMobile = window.innerWidth < 768;
 
