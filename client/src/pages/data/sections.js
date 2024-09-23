@@ -13,12 +13,8 @@ const menuData = {
             link: "binary-addition"
           },
           {
-            title: "Conversions",
+            title: "Conversions Between Bases",
             link: "conversions"
-          },
-          {
-            title: "Between Bases",
-            link: "between-bases"
           },
           {
             title: "Text Compression",
@@ -28,7 +24,7 @@ const menuData = {
       },
       {
         title: "Hardware",
-        com:'hardware',
+        link:'hardware',
         subitems: [
           {
             title: "Logic Gates",
@@ -42,7 +38,7 @@ const menuData = {
       },
       {
         title: "System Software",
-        url:'sys-soft',
+        link:'sys-soft',
         subitems: [
           {
             title: "Disk Scheduling",
@@ -60,7 +56,7 @@ const menuData = {
       },
       {
         title: "Communications",
-        url:'com',
+        link:'com',
         subitems: [
           {
             title: "Network Design",

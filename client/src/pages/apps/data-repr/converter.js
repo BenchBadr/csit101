@@ -1,13 +1,132 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Md from '../../../util/markdown/markdown';
+import { ThemeContext } from '../../../util/sidebar/ThemeContext';
 
 const Converter = () => {
+    // 0 : bin
+    // 1 : oct
+    // 2 : dec
+    // 3 : hex
+    const [cvtMode, setMode] = useState([0,1]);
+    const [inp, setInp] = useState('');
+    const [cvtOut, setOut] = useState('');
+    const [cvtTxt, setCvtText] = useState('Enter a number to get started.')
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const names = ['Binary','Octal','Decimal','Hexadecimal'];
+    const numbers = [2, 8, 10, 16];
+
+    useEffect(() => {
+        if (!inp){
+            setOut('');
+        }
+        setCvtText(inp ?
+`
+> You're converting $${inp}$ from ${names[cvtMode[0]]} to ${names[cvtMode[1]]}.
+
+${conversion()}
+`
+: `Enter a number to get started.`)
+    }, [inp])
+
+    const handleChangeIn = (event) => {
+        const listAllowed = chars.slice(0, numbers[cvtMode[0]]);
+        const inpLower = event.target.value
+            .toUpperCase()
+            .split('')
+            .filter(char => listAllowed.includes(char))
+            .join('')
+        setInp(inpLower)
+    }
+
+
+
+    const Dropdown = ({ index }) => (
+        <select value={cvtMode[index]} onChange={(e) => {
+            const newMode = [...cvtMode];
+            newMode[index] = parseInt(e.target.value);
+            setMode(newMode);
+        }}>
+            {names.map((name, i) => (
+                <option key={i} value={i}>
+                    {name}
+                </option>
+            ))}
+        </select>
+    );
+    
+    const convertedToPowers = () => {
+        const seeked = numbers[cvtMode[0]];
+        let out = `\\text{${inp}}_{${seeked}} = `;
+        let outNum = 0;
+        inp.split('').map((char, index) => {
+            out+=`${chars.indexOf(char)}\\cdot${seeked}^{${inp.length - index - 1}} ${index!==inp.length-1 ? '+' : ''}`
+            outNum+=chars.indexOf(char)*(seeked**(inp.length - index - 1))
+        })
+        return [`$${out} = ${outNum}$`, outNum];
+    }
+    function powersConversion() {
+        const seeked = numbers[cvtMode[1]];
+        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let x = inp;
+        let converted = '';
+        let out = ``;
+        while (x > seeked){
+            const quotient = Math.floor(x / seeked)
+            const module = x % seeked;
+            out+=`$${x} \\div ${seeked} = ${quotient}$ | $${module} ${module>9 ? `\\ (\\text{`+chars[module]+`})` : ''}$\n`;
+            converted = chars[module]+converted;
+            x = quotient;
+        }
+        out+=`$${x} \\div ${seeked} = 0$ | $${x} ${x>9 ? `\\ (\\text{`+chars[x]+`})` : ''}$\n`;
+        converted = chars[x]+converted;
+        return [`| Division | Remainder | \n | - | - | \n${out}\n\nAs the converted number is given by all the remainders, read from the end : $${inp}_{10} = \\text{${converted}}_{${seeked}}$`, converted];
+    }
+
+    const binToOct = () => {
+        let result = inp.padStart(Math.ceil(inp.length / 3) * 3, '0').match(/.{1,3}/g);
+        return [`\`${result.join('/')}\``,0]
+    }
+
+    const conversion = () => {
+        if (cvtMode[0]===cvtMode[1]){
+            return `$${inp}$ is already in ${names[cvtMode[0]]}.`
+        } else if (cvtMode[0]===2){
+            const [latex, output] =  powersConversion()
+            setOut(output)
+            return latex
+        } else if (cvtMode[1]===2){
+            const [latex, output] = convertedToPowers();
+            setOut(output)
+            return latex
+        } else if (cvtMode[0]===0 && cvtMode[1]===1){
+            const [latex, output] = binToOct();
+            return latex
+        }
+        return ''
+    }
+
+
+
     return (
         <>
         <h1>Conversions Between Bases</h1>
-        <input/>
+        <div className='grid-container'>
+            <div className='converter-container'>
+                <Dropdown index={0}/>
+                <input className='converter-input' onChange={handleChangeIn} value={inp}/>
+            </div>
+            <div className='converter-container'>
+                <Dropdown index={1}/>
+                <div className='converter-input' style={{opacity:.5, minHeight:'1em'}}>{cvtOut}</div>
+            </div>
+        </div>
+        <h3>Details</h3>
+        <Md custom={1}>
+{cvtTxt}
+        </Md>
         </>
     )
 }
+
 
 export default Converter;

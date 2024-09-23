@@ -1,5 +1,6 @@
 :root{
   --dark-high:var(--chatgpt);
+
   --dark:#313338;
   --dark-low:#202123;
   --dark-low-op:rgba(32, 33, 35, 0.719);
@@ -7379,3 +7380,49 @@ html, body {
   padding:0;
   font-weight:900;
 }
+
+.converter-input{
+  outline:none;
+  border:none;
+  border-radius:15px;
+  padding:10px 10px;
+  background:var(--light-pure-low);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration:.2s;
+  &:focus{
+    box-shadow: 0 4px 8px color-mix(in srgb, var(--wne-blue), transparent 70%);
+  }
+}
+
+.app.dark .converter-input{
+  background:var(--chatgpt-light);
+  color:white;
+}
+
+.converter-container{
+  padding:20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background:var(--light-pure-lowest-op);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 1rem;
+
+  select {
+    border-radius:1rem;
+    padding:5px 5px;
+    margin-bottom:20px;
+
+    .app.dark &{
+      background:var(--dark);
+      color:white;
+      outline:none;
+    }
+  }
+
+}
+
+.app.dark .converter-container{
+  background:var(--dark-lowest-op);
+}
+
