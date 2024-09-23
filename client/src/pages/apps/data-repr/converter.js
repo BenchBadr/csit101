@@ -16,10 +16,10 @@ const Converter = () => {
     const numbers = [2, 8, 10, 16];
 
     useEffect(() => {
-        if (!inp){
+        if (!(inp==='')){
             setOut('');
         }
-        setCvtText(inp ?
+        setCvtText(inp!='' ?
 `
 > You're converting $${inp}$ from ${names[cvtMode[0]]} to ${names[cvtMode[1]]}.
 
@@ -31,6 +31,7 @@ ${conversion()}
     const handleChangeIn = (event) => {
         const listAllowed = chars.slice(0, numbers[cvtMode[0]]);
         const inpLower = event.target.value
+            .replace(/^0+/, '')
             .toUpperCase()
             .split('')
             .filter(char => listAllowed.includes(char))
@@ -82,9 +83,20 @@ ${conversion()}
         return [`| Division | Remainder | \n | - | - | \n${out}\n\nAs the converted number is given by all the remainders, read from the end : $${inp}_{10} = \\text{${converted}}_{${seeked}}$`, converted];
     }
 
-    const binToOct = () => {
-        let result = inp.padStart(Math.ceil(inp.length / 3) * 3, '0').match(/.{1,3}/g);
-        return [`\`${result.join('/')}\``,0]
+    const binToElse = () => {
+        const seeked = numbers[cvtMode[1]];
+        const length = Math.log2(seeked);
+        let result = inp.padStart(Math.ceil(inp.length / length) * length, '0').match(new RegExp(`.{1,${length}}`, 'g'));
+        let outNum = '';
+        let out = `1. Add zeros at the beginning of the number to make the length a multiple of ${length} and then split the number in different groups of ${length} digits.
+\n      - $${inp} \\to (${result.join(`)(`)})$
+\n 2. Multiply respectives digits of each part by ${([...Array(length)].map((_, i) => 2**(length-i-1)).join('-'))} in this order.\n\n| Part | Multiplication | Result |\n| - | - | - |\n`;
+        result.map((part) => {
+            outNum += part[0]*4+part[1]*2+part[2]*1
+            out+=`| ${part} | $${part[0]} \\cdot 4 + ${part[1]} \\cdot 2 + ${part[2]} \\cdot 1$ | ${part[0]*4+part[1]*2+part[2]*1}\n`
+        })
+        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - ${outNum}\n\n$${inp}_{${numbers[cvtMode[0]]}} = ${outNum}_{${numbers[cvtMode[1]]}}$`
+        return [out,outNum];
     }
 
     const conversion = () => {
@@ -98,8 +110,9 @@ ${conversion()}
             const [latex, output] = convertedToPowers();
             setOut(output)
             return latex
-        } else if (cvtMode[0]===0 && cvtMode[1]===1){
-            const [latex, output] = binToOct();
+        } else if (cvtMode[0]===0){
+            const [latex, output] = binToElse();
+            setOut(output)
             return latex
         }
         return ''
