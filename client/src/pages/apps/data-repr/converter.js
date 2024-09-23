@@ -110,7 +110,7 @@ ${conversion()}
             outNum += chars[res]
             out+=`| ${part} | $${factors.map((fac, index) => `${fac} \\cdot ${part[index]}`).join('+')}$ | $${res} ${res>9 ? `\\ (\\text{${chars[res]}})` : ''}$\n`
         })
-        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - $\\text{${outNum}}$\n\n$\\text{${currentNum}}_{${numbers[cvtMode[0]]}} = \\text{${outNum}}_{${numbers[cvtMode[1]]}}$`
+        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - $\\text{${outNum}}$\n\n$\\Rightarrow \\text{${currentNum}}_{${numbers[cvtMode[0]]}} = \\text{${outNum}}_{${numbers[cvtMode[1]]}}$`
         return [out,outNum];
     }
 
@@ -125,7 +125,7 @@ ${conversion()}
         };        
         
         inp.split('').map((digit) => {out+=`\n    - $\\text{${digit}}_{10} = ${makeN((Number(chars.indexOf(digit))).toString(2))}_2$`});
-        out+=`\n2. Combine the values : \`${outNum}\`\n\nSo $\\text{${inp}}_8 = ${outNum}_2$`
+        out+=`\n2. Combine the values : \`${outNum}\`\n\n\\Rightarrow $\\text{${inp}}_8 = ${outNum}_2$`
         return [out, outNum]
     }
 
@@ -152,7 +152,7 @@ ${conversion()}
             const [latex, output] = elseToBin();
             let out = latex;
             const [latex2, output2] = binToElse(cvtMode[1], output);
-            out+='\n\n---\n'+latex2+'\n'+`\n$\\text{${inp}}_{${numbers[cvtMode[0]]}} = \\text{${output2}}_{${numbers[cvtMode[1]]}}$`;
+            out+='\n\n---\n'+latex2+'\n\n---\n'+`\n$\\Rightarrow \\text{${inp}}_{${numbers[cvtMode[0]]}} = \\text{${output2}}_{${numbers[cvtMode[1]]}}$`;
             setOut(output2);
             return out
         }
