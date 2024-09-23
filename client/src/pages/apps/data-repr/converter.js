@@ -53,6 +53,11 @@ ${conversion()}
                 newMode[Number(!index)] = cvtMode[index];
             }
             setMode(newMode);
+            setInp((inpt) => {
+                const out = cvtOut;
+                setOut(inpt);
+                setInp(out)
+            })
             textHandling(inp);
         }}>
             {names.map((name, i) => (
@@ -147,7 +152,7 @@ ${conversion()}
             const [latex, output] = elseToBin();
             let out = latex;
             const [latex2, output2] = binToElse(cvtMode[1], output);
-            out+='\n\n---\n'+latex2;
+            out+='\n\n---\n'+latex2+'\n'+`\n$\\text{${inp}}_{${numbers[cvtMode[0]]}} = \\text{${output2}}_{${numbers[cvtMode[1]]}}$`;
             setOut(output2);
             return out
         }
