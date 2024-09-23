@@ -29,8 +29,12 @@ ${conversion()}
     }, [inp])
 
     const handleChangeIn = (event) => {
+        textHandling(event.target.value);
+    }
+
+    const textHandling = (text) => {
         const listAllowed = chars.slice(0, numbers[cvtMode[0]]);
-        const inpLower = event.target.value
+        const inpLower = text
             .replace(/^0+/, '')
             .toUpperCase()
             .split('')
@@ -45,7 +49,11 @@ ${conversion()}
         <select value={cvtMode[index]} onChange={(e) => {
             const newMode = [...cvtMode];
             newMode[index] = parseInt(e.target.value);
+            if (newMode[index] === newMode[Number(!index)]){
+                newMode[Number(!index)] = cvtMode[index];
+            }
             setMode(newMode);
+            textHandling(inp);
         }}>
             {names.map((name, i) => (
                 <option key={i} value={i}>
@@ -86,16 +94,18 @@ ${conversion()}
     const binToElse = () => {
         const seeked = numbers[cvtMode[1]];
         const length = Math.log2(seeked);
+        const factors = [...Array(length)].map((_, i) => 2**(length-i-1));
         let result = inp.padStart(Math.ceil(inp.length / length) * length, '0').match(new RegExp(`.{1,${length}}`, 'g'));
         let outNum = '';
         let out = `1. Add zeros at the beginning of the number to make the length a multiple of ${length} and then split the number in different groups of ${length} digits.
 \n      - $${inp} \\to (${result.join(`)(`)})$
-\n 2. Multiply respectives digits of each part by ${([...Array(length)].map((_, i) => 2**(length-i-1)).join('-'))} in this order.\n\n| Part | Multiplication | Result |\n| - | - | - |\n`;
+\n 2. Multiply respectives digits of each part by ${factors.join('-')} in this order.\n\n| Part | Multiplication | Result |\n| - | - | - |\n`;
         result.map((part) => {
-            outNum += part[0]*4+part[1]*2+part[2]*1
-            out+=`| ${part} | $${part[0]} \\cdot 4 + ${part[1]} \\cdot 2 + ${part[2]} \\cdot 1$ | ${part[0]*4+part[1]*2+part[2]*1}\n`
+            const res = factors.reduce((sum, factor, i) => sum + factor * part[i], 0);
+            outNum += chars[res]
+            out+=`| ${part} | $${factors.map((fac, index) => `${fac} \\cdot ${part[index]}`).join('+')}$ | $${res} ${res>9 ? `\\ (\\text{${chars[res]}})` : ''}$\n`
         })
-        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - ${outNum}\n\n$${inp}_{${numbers[cvtMode[0]]}} = ${outNum}_{${numbers[cvtMode[1]]}}$`
+        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - $\\text{${outNum}}$\n\n$\\text{${inp}}_{${numbers[cvtMode[0]]}} = \\text{${outNum}}_{${numbers[cvtMode[1]]}}$`
         return [out,outNum];
     }
 
