@@ -21,7 +21,7 @@ const Converter = () => {
         }
         setCvtText(inp!='' ?
 `
-> You're converting $${inp}$ from ${names[cvtMode[0]]} to ${names[cvtMode[1]]}.
+> You're converting $\\text{${inp}}$ from ${names[cvtMode[0]]} to ${names[cvtMode[1]]}.
 
 ${conversion()}
 `
@@ -71,7 +71,7 @@ ${conversion()}
             out+=`${chars.indexOf(char)}\\cdot${seeked}^{${inp.length - index - 1}} ${index!==inp.length-1 ? '+' : ''}`
             outNum+=chars.indexOf(char)*(seeked**(inp.length - index - 1))
         })
-        return [`$${out} = ${outNum}$`, outNum];
+        return [`$${out} = ${outNum}_{10}$`, outNum];
     }
     function powersConversion() {
         const seeked = numbers[cvtMode[1]];
@@ -91,22 +91,37 @@ ${conversion()}
         return [`| Division | Remainder | \n | - | - | \n${out}\n\nAs the converted number is given by all the remainders, read from the end : $${inp}_{10} = \\text{${converted}}_{${seeked}}$`, converted];
     }
 
-    const binToElse = () => {
-        const seeked = numbers[cvtMode[1]];
+    const binToElse = (selected=cvtMode[1], currentNum=inp) => {
+        const seeked = numbers[selected];
         const length = Math.log2(seeked);
         const factors = [...Array(length)].map((_, i) => 2**(length-i-1));
-        let result = inp.padStart(Math.ceil(inp.length / length) * length, '0').match(new RegExp(`.{1,${length}}`, 'g'));
+        let result = currentNum.padStart(Math.ceil(currentNum.length / length) * length, '0').match(new RegExp(`.{1,${length}}`, 'g'));
         let outNum = '';
         let out = `1. Add zeros at the beginning of the number to make the length a multiple of ${length} and then split the number in different groups of ${length} digits.
-\n      - $${inp} \\to (${result.join(`)(`)})$
+\n      - $${currentNum} \\to (${result.join(`)(`)})$
 \n 2. Multiply respectives digits of each part by ${factors.join('-')} in this order.\n\n| Part | Multiplication | Result |\n| - | - | - |\n`;
         result.map((part) => {
             const res = factors.reduce((sum, factor, i) => sum + factor * part[i], 0);
             outNum += chars[res]
             out+=`| ${part} | $${factors.map((fac, index) => `${fac} \\cdot ${part[index]}`).join('+')}$ | $${res} ${res>9 ? `\\ (\\text{${chars[res]}})` : ''}$\n`
         })
-        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - $\\text{${outNum}}$\n\n$\\text{${inp}}_{${numbers[cvtMode[0]]}} = \\text{${outNum}}_{${numbers[cvtMode[1]]}}$`
+        out+=`3. Combine the octal digits in the \`result\` column.\n\n   - $\\text{${outNum}}$\n\n$\\text{${currentNum}}_{${numbers[cvtMode[0]]}} = \\text{${outNum}}_{${numbers[cvtMode[1]]}}$`
         return [out,outNum];
+    }
+
+    const elseToBin = () => {
+        let out = `1. Convert each digit\n`;
+        const seeked = numbers[cvtMode[1]];
+        let outNum = ``;
+        const makeN = (binStr) => {
+            const adjBin = binStr.padStart(Math.ceil(binStr.length / Math.log2(seeked)) * Math.log2(seeked), '0');
+            outNum += adjBin;
+            return adjBin;
+        };        
+        
+        inp.split('').map((digit) => {out+=`\n    - $\\text{${digit}}_{10} = ${makeN((Number(chars.indexOf(digit))).toString(2))}_2$`});
+        out+=`\n2. Combine the values : \`${outNum}\`\n\nSo $\\text{${inp}}_8 = ${outNum}_2$`
+        return [out, outNum]
     }
 
     const conversion = () => {
@@ -124,6 +139,17 @@ ${conversion()}
             const [latex, output] = binToElse();
             setOut(output)
             return latex
+        } else if (cvtMode[1]==0){
+            const [latex, output] = elseToBin();
+            setOut(output)
+            return latex
+        } else {
+            const [latex, output] = elseToBin();
+            let out = latex;
+            const [latex2, output2] = binToElse(cvtMode[1], output);
+            out+='\n\n---\n'+latex2;
+            setOut(output2);
+            return out
         }
         return ''
     }
