@@ -7370,6 +7370,11 @@ blockquote .fullscreen-button, blockquote .run-btn{
 
 html, body {
   overscroll-behavior: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .sidebar blockquote{
@@ -7426,3 +7431,28 @@ html, body {
   background:var(--dark-lowest-op);
 }
 
+.calc-container{
+  background:color-mix(in srgb, var(--light-pure-lowest), transparent 80%);
+  border-radius: 1rem;
+  max-width: 600px;
+  width:calc(100% - 40px);
+  height:calc(100vh - 60px);
+  padding:20px;
+}
+
+.app.dark .calc-container{
+  background:var(--dark-low-op);
+}
+
+.container-clean-2{
+  position:relative;
+  background:var(--light-pure-lowest-op);
+  border-radius: 1rem;
+  padding:20px;
+  display: flex;
+  align-items: center;
+}
+
+.app.dark .container-clean-2{
+  background:var(--dark-lowest-op);
+}

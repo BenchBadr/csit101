@@ -6,7 +6,7 @@ import NotFoundPage from './pages/404';
 import ReactDOM from 'react-dom/client';
 import { ThemeContext, ThemeContextProvider } from './util/sidebar/ThemeContext';
 import Converter from './pages/apps/data-repr/converter';
-
+import Addition from './pages/apps/data-repr/addition';
 const routes = [
   {
     path: "/",
@@ -17,6 +17,14 @@ const routes = [
     element: <ThemeContextProvider>
     <Home>
       <Converter/>
+    </Home>
+</ThemeContextProvider>,
+  },
+  {
+    path: "/data-repr/binary-addition",
+    element: <ThemeContextProvider>
+    <Home>
+      <Addition/>
     </Home>
 </ThemeContextProvider>,
   },
