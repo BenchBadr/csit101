@@ -7456,3 +7456,23 @@ html, body {
 .app.dark .container-clean-2{
   background:var(--dark-lowest-op);
 }
+
+.caret::after {
+  content: '|';
+  position:'absolute';
+  font-weight: bold;
+  color: var(--main);
+  animation: blinkCaret 1s linear infinite;
+}
+
+@keyframes blinkCaret {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

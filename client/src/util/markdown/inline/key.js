@@ -16,6 +16,9 @@ const Keyboard = ({content}) => {
       if (content.toLowerCase() === 'tab'){
         return  <a className='key' style={{textTransform:'none'}}>Tab</a>
       }
+      if (content.toLowerCase() === 'caret'){
+        return  <a className='caret'/>
+      }
     return <a className="key">{content}</a>
 }
 
